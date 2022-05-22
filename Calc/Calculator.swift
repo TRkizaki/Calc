@@ -77,15 +77,6 @@ struct Calculator : View {
             )
         }
     }
-    
-//  private func checkDecimal(visibleResults: Double) -> String {
-//        if visibleResults.truncatingRemainder(dividingBy: 1).isLess(than: .ulpOfOne) {
-//            return String(Int(visibleResults))
-//        } else {
-//            return String(visibleResults)
-//        }
-//    }
-
 
   private func buttonColor(_ cell: String) -> Color {
     if(cell == "AC" || cell == "⌫") {
