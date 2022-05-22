@@ -7,27 +7,22 @@
 
 import SwiftUI
 
-enum CalculateState {
-    case initial, add, subtract, divide, multiple, sum
-}
-
-struct HomeView: View {
+struct Calculator : View {
     
     private let buttons = [
-        ["AC", "⌫", "%", "/"],
+        ["AC", "⌫", "%", "÷"],
         ["7", "8", "9", "x"],
         ["4", "5", "6", "-"],
         ["1", "2", "3", "+"],
         [".", "0", "="],
     ]
     
-    private let operators = ["/", "+", "x", "%"]
+    private let operators = ["÷", "+", "x", "%"]
     
     private let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 40 ) / 4
     
     @State var visibleWorkings = ""
     @State var visibleResults = ""
-    @State var calculateState: CalculateState = .initial
     @State var showAlert = false
     
     var body: some View {
@@ -84,7 +79,7 @@ struct HomeView: View {
         }
     }
     
-    private func checkDecimal(visibleResults: Double) -> String {
+  private func checkDecimal(visibleResults: Double) -> String {
         if visibleResults.truncatingRemainder(dividingBy: 1).isLess(than: .ulpOfOne) {
             return String(Int(visibleResults))
         } else {
@@ -114,17 +109,18 @@ struct HomeView: View {
              visibleResults = calculateResults()
          case "-":
              addMinus()
-
-         case "x", "/", "%", "+":
+         case "÷":
+             calculateDivision()
+         case "%":
+             calculatePercentage()
+         case "x", "+":
              addOperator(cell)
-
          default:
              visibleWorkings += cell
          }
         
         
    func addOperator(_ cell : String){
-    
             if !visibleWorkings.isEmpty{
                 let last = String(visibleWorkings.last!)
                 if operators.contains(last) || last == "-" {
@@ -143,14 +139,26 @@ struct HomeView: View {
                  visibleWorkings += "-"
              }
         }
-     }
+      
+   func calculateDivision() {
+          if visibleResults.isEmpty || visibleWorkings.last! != "÷"
+          {
+              visibleWorkings += "/"
+          }
+      }
+      
+   func calculatePercentage() {
+          if visibleResults.isEmpty || visibleWorkings.last! != "%"
+          {
+              visibleWorkings += "*0.01"
+          }
+          
+      }
     
-   
    func calculateResults() -> String {
-  
        if(validInput()){
-       var workings = visibleWorkings.replacingOccurrences(of: "%", with: "*0.01")
-       workings = visibleWorkings.replacingOccurrences(of: "x", with: "*")
+          
+        let workings = visibleWorkings.replacingOccurrences(of: "x", with: "*")
   
        let expression = NSExpression(format: workings)
        let result = expression.expressionValue(with: nil, context: nil) as! Double
@@ -175,23 +183,21 @@ struct HomeView: View {
        return true
    }
    
-    func formatResult(val: Double) -> String
-   {
+    func formatResult(val: Double) -> String {
        if(val.truncatingRemainder(dividingBy: 1) == 0)
        {
            return String(format: "%.0f", val)
        }
        return String(format: "%.2f", val)
-   }
-    
-    
-    
+    }
+  }
 }
 
-struct HomeView_Previews: PreviewProvider {
+
+struct Calculator_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
-            HomeView()
+            Calculator()
                 .navigationBarHidden(true)
         }
     }

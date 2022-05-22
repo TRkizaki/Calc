@@ -12,7 +12,7 @@ struct CalcApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                HomeView()
+                Calculator()
                     .navigationBarHidden(true)
             }
             .navigationViewStyle(StackNavigationViewStyle())
