@@ -13,7 +13,7 @@ enum CalculateState {
 
 struct HomeView: View {
     
-    private let buttons = [//calculateItems
+    private let buttons = [
         ["AC", "⌫", "%", "/"],
         ["7", "8", "9", "x"],
         ["4", "5", "6", "-"],
@@ -25,8 +25,8 @@ struct HomeView: View {
     
     private let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 40 ) / 4
     
-    @State var visibleWorkings = "" //selectedItems //selectedNumber
-    @State var visibleResults = "" //calculateNumber
+    @State var visibleWorkings = ""
+    @State var visibleResults = ""
     @State var calculateState: CalculateState = .initial
     @State var showAlert = false
     
@@ -46,11 +46,11 @@ struct HomeView: View {
             HStack {
                 Spacer()
                 Text(visibleResults)
-                //Text(visibleResults == "0" ? checkDecimal(visibleResults: visibleResults) : visibleWorkings)//56:14
+                
                     .padding()
                     .foregroundColor(Color.yellow)
                     .font(.system( size: 50, weight: .regular))
-                   // .minimumScaleFactor(0.4)
+              
                   }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         
@@ -103,8 +103,7 @@ struct HomeView: View {
       return .blue
   }
 
-  private func buttonPressed(cell: String){ //handleButtonInfo 36:50
-    
+  private func buttonPressed(cell: String){
          switch cell {
          case "AC":
              visibleWorkings = ""
@@ -115,19 +114,17 @@ struct HomeView: View {
              visibleResults = calculateResults()
          case "-":
              addMinus()
-//         case "÷":
-//             addDivide()
+
          case "x", "/", "%", "+":
              addOperator(cell)
-//         case ".":
-//             addComma(cell)
+
          default:
              visibleWorkings += cell
          }
         
         
    func addOperator(_ cell : String){
-       //guard let visibleOperation = Double(visibleWorkings) else { return }
+    
             if !visibleWorkings.isEmpty{
                 let last = String(visibleWorkings.last!)
                 if operators.contains(last) || last == "-" {
@@ -145,45 +142,16 @@ struct HomeView: View {
              {
                  visibleWorkings += "-"
              }
-           }
-         
+        }
      }
     
-//    func addDivide(){
-//        
-//    }
-    
-//    func addComma(_ cell: String) {
-//        if cell == "." && (visibleWorkings.contains(".") || visibleWorkings.contains("0")) {
-//            return
-//        }
-//    }
-    
-//    private func calculate(visibleWorking: Double) {
-//
-//        switch calculateState {
-//
-//        case .add:
-//            <#code#>
-//        case .subtract:
-//            <#code#>
-//        case .divide:
-//            visibleResults =
-//        case .multiple:
-//            <#code#>
-//        default:
-//            break
-//        }
-//
-//    }
-    
    
-    private func calculateResults() -> String {
+   func calculateResults() -> String {
   
        if(validInput()){
        var workings = visibleWorkings.replacingOccurrences(of: "%", with: "*0.01")
        workings = visibleWorkings.replacingOccurrences(of: "x", with: "*")
-       //workings = visibleWorkings.replacingOccurrences(of: "÷", with: "/")
+  
        let expression = NSExpression(format: workings)
        let result = expression.expressionValue(with: nil, context: nil) as! Double
        return formatResult(val: result)
@@ -192,7 +160,7 @@ struct HomeView: View {
        return ""
    }
    
-   private func validInput() -> Bool {
+   func validInput() -> Bool {
        if(visibleWorkings.isEmpty) {
            return false
        }
@@ -207,9 +175,9 @@ struct HomeView: View {
        return true
    }
    
-   private func formatResult(val: Double) -> String
+    func formatResult(val: Double) -> String
    {
-       if(val.truncatingRemainder(dividingBy: 1) == 0)//
+       if(val.truncatingRemainder(dividingBy: 1) == 0)
        {
            return String(format: "%.0f", val)
        }
