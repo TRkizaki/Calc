@@ -14,14 +14,14 @@ enum CalculateState {
 struct HomeView: View {
     
     private let buttons = [//calculateItems
-        ["AC", "⌫", "%", "÷"],
+        ["AC", "⌫", "%", "/"],
         ["7", "8", "9", "x"],
         ["4", "5", "6", "-"],
         ["1", "2", "3", "+"],
         [".", "0", "="],
     ]
     
-    private let operators = ["÷", "+", "x", "%"]
+    private let operators = ["/", "+", "x", "%"]
     
     private let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 40 ) / 4
     
@@ -31,6 +31,7 @@ struct HomeView: View {
     @State var showAlert = false
     
     var body: some View {
+        
         VStack {
             HStack {
                 Spacer()
@@ -114,9 +115,9 @@ struct HomeView: View {
              visibleResults = calculateResults()
          case "-":
              addMinus()
-         case "÷":
-             addDivide()
-         case "x", "%", "+":
+//         case "÷":
+//             addDivide()
+         case "x", "/", "%", "+":
              addOperator(cell)
 //         case ".":
 //             addComma(cell)
@@ -148,9 +149,9 @@ struct HomeView: View {
          
      }
     
-    func addDivide(){
-        
-    }
+//    func addDivide(){
+//        
+//    }
     
 //    func addComma(_ cell: String) {
 //        if cell == "." && (visibleWorkings.contains(".") || visibleWorkings.contains("0")) {
