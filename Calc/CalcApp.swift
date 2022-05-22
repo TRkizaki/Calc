@@ -2,7 +2,7 @@
 //  CalcApp.swift
 //  Calc
 //
-//  Created by DJ perrier  on 18/5/2022.
+//  Created by TRkizaki on 22/5/2022.
 //
 
 import SwiftUI

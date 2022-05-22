@@ -1,8 +1,8 @@
 //
-//  HomeView.swift
+//  Calculator.swift
 //  Calc
 //
-//  Created by DJ perrier  on 20/5/2022.
+//  Created by TRkizaki  on 22/5/2022.
 //
 
 import SwiftUI
@@ -41,7 +41,6 @@ struct Calculator : View {
             HStack {
                 Spacer()
                 Text(visibleResults)
-                
                     .padding()
                     .foregroundColor(Color.yellow)
                     .font(.system( size: 50, weight: .regular))
@@ -56,8 +55,8 @@ struct Calculator : View {
                          action: { buttonPressed(cell: cell)},
                           label: {
                              Text(cell)
-                                .frame(minWidth: 0, maxWidth: .infinity,
-                                       minHeight: 0 ,maxHeight: .infinity)
+                                .frame(maxWidth: .infinity,
+                                       maxHeight: .infinity)
                                 .frame(width: cell == "0" ? buttonWidth * 2 + 10 : buttonWidth)
                                 .foregroundColor(buttonColor(cell))
                                 .font(.system( size: 30, weight: .regular))
@@ -79,13 +78,13 @@ struct Calculator : View {
         }
     }
     
-  private func checkDecimal(visibleResults: Double) -> String {
-        if visibleResults.truncatingRemainder(dividingBy: 1).isLess(than: .ulpOfOne) {
-            return String(Int(visibleResults))
-        } else {
-            return String(visibleResults)
-        }
-    }
+//  private func checkDecimal(visibleResults: Double) -> String {
+//        if visibleResults.truncatingRemainder(dividingBy: 1).isLess(than: .ulpOfOne) {
+//            return String(Int(visibleResults))
+//        } else {
+//            return String(visibleResults)
+//        }
+//    }
 
 
   private func buttonColor(_ cell: String) -> Color {
@@ -152,14 +151,11 @@ struct Calculator : View {
           {
               visibleWorkings += "*0.01"
           }
-          
       }
     
    func calculateResults() -> String {
        if(validInput()){
-          
-        let workings = visibleWorkings.replacingOccurrences(of: "x", with: "*")
-  
+       let workings = visibleWorkings.replacingOccurrences(of: "x", with: "*")
        let expression = NSExpression(format: workings)
        let result = expression.expressionValue(with: nil, context: nil) as! Double
        return formatResult(val: result)
@@ -179,12 +175,11 @@ struct Calculator : View {
                return false
            }
        }
-       
        return true
    }
    
     func formatResult(val: Double) -> String {
-       if(val.truncatingRemainder(dividingBy: 1) == 0)
+       if(val.truncatingRemainder(dividingBy: 1).isLess(than: .ulpOfOne))
        {
            return String(format: "%.0f", val)
        }
