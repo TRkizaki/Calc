@@ -1,4 +1,6 @@
 # Calc
 Calculator using by SwiftUI
-DEV: iOS 15.5
-XCode:v 13.4
+
+* iOS 15.5
+
+* XCode: 13.4
