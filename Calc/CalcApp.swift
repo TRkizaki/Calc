@@ -2,7 +2,7 @@
 //  CalcApp.swift
 //  Calc
 //
-//  Created by DJ perrier  on 18/5/2022.
+//  Created by TRkizaki on 22/5/2022.
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ struct CalcApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                HomeView()
+                Calculator()
                     .navigationBarHidden(true)
             }
             .navigationViewStyle(StackNavigationViewStyle())
